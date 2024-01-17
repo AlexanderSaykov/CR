@@ -7,19 +7,18 @@ spark = SparkSession.builder.master("local").getOrCreate()
 # Read a large JSON file (>10 TB)
 df = spark.read.json("C/rnu_4_5_json")
 
-# Group by 'id_pk' and count 'dt_account', exclude 'id_pk' 117
+
 dt_accountCount = df.groupBy("id_pk").agg(count("dt_account").alias("dtCount")).filter(col("id_pk") != 117)
 
-# Group by 'id_pk' and count 'kt_account', exclude 'id_pk' 117
+
 kt_accountCount = df.groupBy("id_pk").agg(count("kt_account").alias("ktCount")).filter(col("id_pk") != 117)
 
-# Find max of 'dt_account' for each 'id_pk'
+
 dt_max = df.groupBy("id_pk").agg(max("dt_account").alias("dtCountMax"))
 
-# Find max of 'kt_account' for each 'id_pk'
 kt_max = df.groupBy("id_pk").agg(max("kt_account").alias("ktCountMax"))
 
-# Join the dataframes and exclude 'id_pk' 7747
+
 resultDf = dt_accountCount \
     .join(kt_accountCount, ["id_pk"]) \
     .join(dt_max, ["id_pk"]) \
