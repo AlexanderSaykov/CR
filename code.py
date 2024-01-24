@@ -25,6 +25,8 @@ resultDf = dt_accountCount \
     .join(kt_max, ["id_pk"]) \
     .filter(col("id_pk") != 7747)
 
+resultDf.cache()
+
 # Read a small JSON file (smaller than 10 MB)
 df2Dict = spark.read.json("C/dictionary")
 
