@@ -8,10 +8,10 @@ spark = SparkSession.builder.master("local").getOrCreate()
 df = spark.read.json("C/rnu_4_5_json")
 
 
-dt_accountCount = df.groupBy("id_pk").agg(count("dt_account").alias("dtCount")).filter(col("id_pk") != 117)
+dt_accountCount = df.groupBy("id_pk").agg(count("dt_account").alias("dtCount")).filter(col("id_pk") != 117).distinct()
 
 
-kt_accountCount = df.groupBy("id_pk").agg(count("kt_account").alias("ktCount")).filter(col("id_pk") != 117)
+kt_accountCount = df.groupBy("id_pk").agg(count("kt_account").alias("ktCount")).filter(col("id_pk") != 117).distinct()
 
 
 dt_max = df.groupBy("id_pk").agg(max("dt_account").alias("dtCountMax"))
